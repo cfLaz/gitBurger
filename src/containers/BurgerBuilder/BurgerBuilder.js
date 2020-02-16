@@ -77,9 +77,9 @@ class BurgerBuilder extends Component {
         };
         return(
             <Aux>
-             <Modal>
+             {/* <Modal> */}
                 <OrderS ingredients={this.state.ingredients}/>
-             </Modal>
+             {/* </Modal> */}
               <Burger 
               ingredients={this.state.ingredients}
               />
