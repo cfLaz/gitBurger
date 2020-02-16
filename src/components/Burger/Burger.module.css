@@ -12,6 +12,7 @@
 .testClass {
     display: flex;
     flex-direction: row;
+    text-align: center;
 }
 
 @media(min-width:500 px) and (max-height: 400px) {
