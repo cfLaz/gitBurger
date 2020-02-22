@@ -1,0 +1,9 @@
+.Backdrop {
+    width: 100%;
+    width: 100%;
+    position:  fixed; /*stays in position even when we scroll*/
+    z-index: 100; /*so it's above elements we want it to sit above*/
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0.5);
+}
