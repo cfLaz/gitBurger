@@ -1,5 +1,5 @@
 .Backdrop {
-    width: 100%;
+    height: 100%;
     width: 100%;
     position:  fixed; /*stays in position even when we scroll*/
     z-index: 100; /*so it's above elements we want it to sit above*/
