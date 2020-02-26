@@ -5,7 +5,10 @@ import NavItems from '../NavigationItems/NavigationItems';
 const toolbar= (props) => (
     <header className={classes.Toolbar}>
         <div>МЕНИ</div>
-        <Logo/>
+        {/* <Logo height='80%'/> */}
+        <div className={classes.Logo}>
+            <Logo/>
+        </div>
         <nav>
             <NavItems/>
         </nav>
