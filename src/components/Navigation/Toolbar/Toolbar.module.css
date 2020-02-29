@@ -27,3 +27,13 @@
         display: none;
     }
 }
+
+.meni{
+    width: 30%;
+    display: flex;
+    /*position: absolute;*/
+    margin-top: 20px;
+}
+.meni:nth-child(1){
+    margin-bottom: 20px;
+}

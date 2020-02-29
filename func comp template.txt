@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-const buildControls= (props) => ();
+const = (props) => ();
 
-export default BI;
+export default ;
