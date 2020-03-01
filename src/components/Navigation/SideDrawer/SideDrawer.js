@@ -22,7 +22,7 @@ const sideDrawer= (props) => {
             <nav>
                 <NavItems/>
             </nav>
-        </div>
+        </div>  
       </Aux>
     );
 };

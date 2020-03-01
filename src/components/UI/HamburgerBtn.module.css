@@ -1,7 +1,11 @@
-.div {
-    width: 35px;
-    height: 5px;
-    background-color: black;
-    margin: 6px 0;
-    margin-left: 10px;
+/*I added this file*/
+
+  @media(max-width: 500px){
+    .div {
+      width: 35px;
+      height: 5px;
+      background-color: black;
+      margin: 6px 0;
+      margin-left: 10px;
+    }
   }

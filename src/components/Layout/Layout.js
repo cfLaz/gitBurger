@@ -7,15 +7,25 @@ import SDrawer from '../Navigation/SideDrawer/SideDrawer';
 
 class Layout extends Component {
     state = {
-        showSD: true
+        showSD: false
     }
     sideDrawerClosed = () => {
         this.setState({showSD: false});
     }
+    // sideDrawerOpened =() => {
+    //     this.setState({showSD: true});
+    // }
+    sideDrawerToggleHandler = () => {
+        this.setState( (prevState) => {
+            return {showSD: !prevState.showSD};
+        });
+    }
     render () {
         return (
         <Aux>
-            <Toolbar/>
+            {/* <Toolbar open={this.sideDrawerOpened}/> I added this for hamburger icon*/}
+            <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler}/>
+
             <SDrawer
                 closed={this.sideDrawerClosed}
                 open={this.state.showSD}
