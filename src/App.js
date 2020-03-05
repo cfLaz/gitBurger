@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Layout from './components/Layout/Layout';
+import Layout from './containers/Layout/Layout';
 //import bb from './containers/BurgerBuilder/BurgerBuilder';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 
