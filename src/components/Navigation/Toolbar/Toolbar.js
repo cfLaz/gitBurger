@@ -4,7 +4,7 @@ import Logo from '../../Logo/Logo';
 import NavItems from '../NavigationItems/NavigationItems';
 //import Hbtn from '../../UI/HamburgerBtn';
 import DrawerToggle from '../SideDrawer/DrawerToggle';
-import drawerToggle from '../SideDrawer/DrawerToggle';
+
 
 const toolbar= (props) => (
 

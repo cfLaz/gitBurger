@@ -4,6 +4,7 @@ import Burger from '../../components/Burger/Burger';
 import BCs from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderS from '../../components/Burger/OrderSummary/OrderS';
+import axios from '../../../src/Axios-orders';
 
 const  PRICES = {
     salad: 0.5,
@@ -75,7 +76,27 @@ class BurgerBuilder extends Component {
         this.setState({purchasing: false});
     }
     purchaseContinueHandler = () => {
+        const order = {
+            ingredients: this.state.ingredients,
+            price: this.state.totalPrice.toFixed(2), //this would ussualy be set up on the server, otherwise, users could manipulate it.
+            customer: {
+                name: 'Laz',
+                address: {
+                    street: 'ulichica bb',
+                    zipCode: 78000,
+                    country: 'Krajina',
+                },
+                email: 'lazni@gmail.com',
+                
+            },
+            deliveryMethod: 'fast&furious'
+        };
+        //needs to have .json becaue of firebase
+        axios.post('/orders.json', order).then(response => console.log(response))
+        .catch(error=> console.log(error));
+
         alert('Бургер се спрема');
+
     }
     render () {
         const disabledInfo = {
