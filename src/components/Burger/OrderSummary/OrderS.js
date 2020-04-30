@@ -7,8 +7,8 @@ class OrderS extends Component {
         console.log('OrderSummary did update')
     }
     render(){
-        const ingSummary = Object.keys(this.props.ingredients).
-        map(igKey =>{
+        const ingSummary = Object.keys(this.props.ingredients)
+        .map(igKey =>{
             return(
             <li key={igKey}>
                 <span style={{textTransform: 'capitalize'}}>{igKey}</span>: {this.props.ingredients[igKey]}

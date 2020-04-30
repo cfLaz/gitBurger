@@ -131,6 +131,7 @@ class BurgerBuilder extends Component {
         let orderSummary= null;
 
         if(this.state.ingredients) {
+            
         burger = (
             <Aux>
                 <Burger 
@@ -171,7 +172,7 @@ class BurgerBuilder extends Component {
              <Modal 
                 show={this.state.purchasing} 
                 modalClosed={this.purchaseCancelHandler}>
-                (orderSummary)
+                {orderSummary}
              </Modal>
                     {burger}
               

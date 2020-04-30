@@ -1,0 +1,4 @@
+BurgerBuilder je baza, ima state sa sastojcima koje uzimamo sa firebase DB, i ostale parametre.
+U sebi sadrzi Burger(<div></div>) koji u sebi ima sastojke (BurgerIngredient)
+Ispod burgera su kontrole (BuildControls) za upravljanje sastojcima burgera
+Kada se ispunce sastojci i posalje zahtjev za narucivanje, iskace Order Summary iznad kojeg je Modal 
