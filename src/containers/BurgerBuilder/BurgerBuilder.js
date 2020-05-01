@@ -31,6 +31,7 @@ class BurgerBuilder extends Component {
     loading: false,
     error:false,
     }
+
     componentDidMount () {
         axios.get('https://burger-builder-f9f4f.firebaseio.com/ingredients.json').then(
            response => {
@@ -40,6 +41,7 @@ class BurgerBuilder extends Component {
            }) 
         
     }
+
     updatePurchaseState (ingredients) {
 
         const sum = Object.keys(ingredients).map(igKey =>{
@@ -85,48 +87,23 @@ class BurgerBuilder extends Component {
     }
     purchaseContinueHandler = () => { 
         /* this.setState ( {loading:true,});
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice.toFixed(2), //this would ussualy be set up on the server, otherwise, users could manipulate it.
-            customer: {
-                name: 'Laz',
-                address: {
-                    street: 'ulichica bb',
-                    zipCode: 78000,
-                    country: 'Krajina',
-                },
-                email: 'lazni@gmail.com',
-                
-            },
-            deliveryMethod: 'fast&furious'
-        };
-        //needs to have .json becaue of firebase
-        axios.post('/orders.json', order).then(response => {
-
-            this.setState({loading:false, purchasing:false});
-            }).catch( error=> {
-                console.log(error);
-                this.setState({
-                    loading:false, 
-                    purchasing:false
-                    }
-                );
-            });
-
-        alert('Бургер се спрема'); */
+         */
         const queryParams = [];
-
+        console.log(this.props)
         for (let i in this.state.ingredients){
             queryParams.push(
                 encodeURIComponent(i)+'='+ encodeURIComponent(this.state.ingredients[i])
             );
         }
+        
+        queryParams.push('price=' + this.state.totalPrice); 
         const queryString = queryParams.join('&');
         
         this.props.history.push({
             pathname:'/checkout',
             search: '?' + queryString,
         });
+        console.log(this.props)
     }
     
     render () {
