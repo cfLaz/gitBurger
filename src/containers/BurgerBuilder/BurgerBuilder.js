@@ -83,9 +83,8 @@ class BurgerBuilder extends Component {
     purchaseCancelHandler = () => {
         this.setState({purchasing: false});
     }
-    purchaseContinueHandler = () => {
-
-        this.setState ( {loading:true,});
+    purchaseContinueHandler = () => { 
+        /* this.setState ( {loading:true,});
         const order = {
             ingredients: this.state.ingredients,
             price: this.state.totalPrice.toFixed(2), //this would ussualy be set up on the server, otherwise, users could manipulate it.
@@ -114,8 +113,20 @@ class BurgerBuilder extends Component {
                 );
             });
 
-        alert('Бургер се спрема');
+        alert('Бургер се спрема'); */
+        const queryParams = [];
 
+        for (let i in this.state.ingredients){
+            queryParams.push(
+                encodeURIComponent(i)+'='+ encodeURIComponent(this.state.ingredients[i])
+            );
+        }
+        const queryString = queryParams.join('&');
+        
+        this.props.history.push({
+            pathname:'/checkout',
+            search: '?' + queryString,
+        });
     }
     
     render () {

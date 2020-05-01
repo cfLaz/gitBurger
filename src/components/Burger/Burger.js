@@ -1,8 +1,10 @@
 import React from 'react';
 import classes from './Burger.module.css';
 import BI from './BurgerIngredient/BurgerIngredient';
-
+import {withRouter} from 'react-router-dom'; //we can use this if we don't want to manually add props from top level component
 const burger = (props) => {
+    console.log(props);
+
     //Object.keys() gives an array of the keys, not values, so it would be ['salad',...]
     let transIng = Object.keys(props.ingredients).map(inKey =>{
         //console.log(inKey);
@@ -32,7 +34,7 @@ const burger = (props) => {
     );
 };
 
-export default burger;
+export default withRouter(burger);
 
 /**let x = [2,3,4]
 undefined

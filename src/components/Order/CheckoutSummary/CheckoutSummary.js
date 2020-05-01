@@ -2,7 +2,7 @@ import React from 'react';
 import Burger from '../../../components/Burger/Burger';
 import Button from '../../Burger/OrderSummary/Button/Button';
 import classes from './CheckoutSummary.module.css';
-
+import {withRouter} from 'react-router-dom';
 const checkoutSummary= (props) => {
     return(
         <div className={classes.CheckoutSummary}>
@@ -16,14 +16,14 @@ const checkoutSummary= (props) => {
 
             <Button 
             btnType='Danger'
-            clicked
+            clicked={props.checkoutCancelled}
             >
                 CANCEL
             </Button>
 
             <Button 
             btnType='Success'
-            clicked
+            clicked={props.checkoutContinued}
             >
                 CONTINUE
             </Button>
@@ -32,4 +32,4 @@ const checkoutSummary= (props) => {
     )
 };
 
-export default checkoutSummary;
+export default withRouter(checkoutSummary);

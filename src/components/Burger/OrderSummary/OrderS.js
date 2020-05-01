@@ -7,6 +7,7 @@ class OrderS extends Component {
         console.log('OrderSummary did update')
     }
     render(){
+       
         const ingSummary = Object.keys(this.props.ingredients)
         .map(igKey =>{
             return(
@@ -24,9 +25,15 @@ class OrderS extends Component {
                 </ul>
                 <p><strong>цијена: {this.props.price.toFixed(2)}</strong></p>
                 <p>Да наплатимо?</p>
+
                 <Button btnType='Danger' clicked={this.props.purchaseCanceled}>
-                    Не :(</Button>
-                <Button btnType='Success' clicked={this.props.purchaseContinued}>
+                    Не :(
+                </Button>
+                
+                <Button btnType='Success' 
+                clicked={this.props.purchaseContinued}
+                
+                >
                     Да :)
                 </Button>
                     

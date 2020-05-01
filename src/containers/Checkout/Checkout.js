@@ -10,10 +10,30 @@ state={
         bacon:1,
     }
 }
+componentDidMount() {
+    const query = new URLSearchParams(this.props.location.search);
+    const ingredients= {};
+    for (let param of query.entries()) {
+        // ['salad'. '1']
+        ingredients[param[0]] = +param [1];
+    }
+    this.setState({ingredients: ingredients});
+}
+checkoutCancelledHandler = () => {
+    this.props.history.goBack();
+}
+checkoutContinuedHandler = () => {
+    this.props.history.replace('/checkout/contact-data');
+}
     render () {
+    console.log(this.props);
         return(
             <div>
-                <CheckoutSum ingredients={this.state.ingredients} />
+                <CheckoutSum 
+                ingredients={this.state.ingredients} 
+                checkoutContinued={this.checkoutContinuedHandler}
+                checkoutCancelled={this.checkoutCancelledHandler}
+                />
             </div>
         )
     }
