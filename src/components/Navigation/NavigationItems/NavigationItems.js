@@ -7,15 +7,16 @@ const navigationItems= (props) => (
         
         <NavItem
         link='/'
-        active//boolean properties can be setup like this (without active={true})
+        exact
+        //active//boolean properties can be setup like this (without active={true})  
         >
             Burger Builder
         </NavItem>
 
         <NavItem
-        link='/'
+        link='/orders'
         >
-            Checkout
+            Orders
         </NavItem>
     </ul>
 );
