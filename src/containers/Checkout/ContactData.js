@@ -15,6 +15,11 @@ class ContactData extends Component {
                     placeholder: 'Your Name',
                 },
                 value: '',
+                validation: {
+                    required: true,
+                },
+                valid: false,
+                touched: false,
             },
             street: {
                 elementType: 'input',
@@ -23,6 +28,11 @@ class ContactData extends Component {
                     placeholder: 'Street',
                 },
                 value: '',
+                validation: {
+                    required: true,
+                },
+                valid: false,
+                touched: false,
             },
             zipCode: {
                 elementType: 'input',
@@ -31,6 +41,13 @@ class ContactData extends Component {
                     placeholder: 'ZIP Code',
                 },
                 value: '',
+                validation: {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 7,
+                },       
+                valid: false,
+                touched: false,
             },
             country: {
                 elementType: 'input',
@@ -39,6 +56,11 @@ class ContactData extends Component {
                     placeholder: 'Country',
                 },
                 value: '',
+                validation: {
+                    required: true,
+                },
+                valid: false,
+                touched: false,
             },
             email: {
                 elementType: 'input',
@@ -46,21 +68,30 @@ class ContactData extends Component {
                     type: 'email',
                     placeholder: 'Your E-Mail',
                 },
+                validation: {
+                    required: true,
+                },
                 value: '',
+                valid: false,
+                touched: false,
             },
             deliveryMethod: {
                 elementType: 'select',
                 elementConfig: {
-                    options: [
+                    options: [//VP quick doesn't shows up in firebase for some reason
                               {value: 'VIP quick', displayValue: 'vip quick'},
                               {value: 'economy', displayValue: 'standard'},
                             ]
                 },
-                value: '',
+                value: 'hmm',
+                valid: true, //added because of disabled button, formIsValid was always undefined (treated as false and can't be changed to true) because we had no 'valid' here, which makes my added checkup for deliveryMethod in inputChangedHandler irrelevant.
+                //actually, it's relevant, I'm doing it because of rules.required
+                validation: {}, //added for the same reason ^ (now my stuff is irrelevant)
             },
         },
         
         loading:false,
+        formIsValid: false,
     }
 
 
@@ -70,7 +101,6 @@ class ContactData extends Component {
         const formData = {};
         for (let formElementId in this.state.orderForm){
             formData[formElementId] = this.state.orderForm[formElementId].value;
-
         };
         const order = {
             ingredients: this.props.ingredients,
@@ -93,6 +123,29 @@ class ContactData extends Component {
         alert('Бургер се спрема');
     } 
 
+    checkValidity(value, rules, id){
+        let isValid = true;
+        //if(!rules) return true; -another way of avoiding undefined
+        if(rules.required){ //isValid depends on if string is empty or not
+            isValid = value.trim()!== '' && isValid;
+            // .trim() removes any whitespace at the beginning and the end
+        };
+        if (rules.minLength) {
+            isValid = (value.length >= rules.minLength && isValid);
+        };
+        if (rules.maxLength) {
+            isValid = (value.length <= rules.maxLength && isValid);
+        }
+        if(id === 'email'){
+            //need to add email validity
+        }
+        /* my setup ** 
+        if (rules.minLength) {
+            isValid = (value.length >= rules.minLength) && (value.length <= rules.maxLength);
+        } */
+        return isValid;
+    }
+
     inputChangedHandler = (event, inputIdentifier) => {
         //console.log(event.target.value);
         const updatedOrderForm = { //need to clone deeply, ...this.state.orderForn does not create a deep clone (it creates copied object and its properties, but its properties are nested object and properties within them won't be cloned (it would ne just poinet to them) and that way we mutate the original state unfortunately)
@@ -100,9 +153,21 @@ class ContactData extends Component {
         } ;  
                                             /*email, name...for elementConfig we would have to clone deeply again*/
         const updatedFormEl= {...updatedOrderForm[inputIdentifier]};
+
         updatedFormEl.value = event.target.value;
+        updatedFormEl.touched=true;
+        //I added if condition  bcz it throws an error in checkValidity because rules.required is undefined (later discussed in the course 248)
+        if(inputIdentifier !== 'deliveryMethod')updatedFormEl.valid=this.checkValidity(updatedFormEl.value, updatedFormEl.validation, inputIdentifier); //I added 3rd atribute bcz of email
+
+        let formIsValid = true;
+        for (let inputId in updatedOrderForm) {
+            formIsValid = updatedOrderForm[inputId].valid && formIsValid
+        }
+
+        //console.log(updatedFormEl.valid);
         updatedOrderForm[inputIdentifier] = updatedFormEl;
-        this.setState({orderForm: updatedOrderForm});
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
+
     }
     render() {
         const formElementsArray =[];
@@ -111,7 +176,7 @@ class ContactData extends Component {
             formElementsArray.push({
                 id: key,
                 config: this.state.orderForm[key],
-            })
+            }) // [{id: name, config: 'everything in name'}, {}...]
         }
 
         let form = (
@@ -120,14 +185,18 @@ class ContactData extends Component {
                     <Input 
                         key={formEl.id}
                         elementType={formEl.config.elementType} 
-                        elementConfig={formEl.config}
+                        elementConfig={formEl.config.elementConfig}
                         value={formEl.config.value}
                         changed={(event) => this.inputChangedHandler(event, formEl.id)} //anonimous function, so we can pass arguments into iCH (event is created by React automatically)
+                        invalid={!formEl.config.valid}
+                        shouldValidate={formEl.config.validation} //returns true if it exists
+                        touched={formEl.config.touched}
                     />
                 ))
             }
             <Btn 
-            btnType ='Success' 
+            btnType ='Success'
+            disabled={!this.state.formIsValid} 
             >
                 ORDER
             </Btn>

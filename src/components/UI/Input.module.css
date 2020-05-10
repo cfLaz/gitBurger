@@ -1,6 +1,6 @@
 .Input {
     width: 100%;
-    padding: 10%;
+    padding: 3%;
     box-sizing: border-box;
 
 }
@@ -24,4 +24,12 @@
     outline: none;
     background-color: #ccc;
 
+}
+.Invalid {
+    border: 1px solid red;
+    background-color: rgb(238, 134, 122);
+
+}
+.p {
+    color: red;
 }
