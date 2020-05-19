@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import CheckoutSum from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import {Route} from 'react-router-dom';
 import ContactData from './ContactData.js';
+import {connect} from 'react-redux';
+
 
 class Checkout extends Component {
-state={
+/* state={
     ingredients: null,
     totalPrice:0,
 }
@@ -20,7 +22,10 @@ componentWillMount() {//changed from DidMount because it was accessing <Route/> 
         else ingredients[param[0]] = +param[1];
     }
     this.setState({ingredients: ingredients, totalPrice: price});
-}
+} */
+
+
+
 checkoutCancelledHandler = () => {
     this.props.history.goBack();
 }
@@ -32,15 +37,17 @@ checkoutContinuedHandler = () => {
         return(
             <div>
                 <CheckoutSum 
-                ingredients={this.state.ingredients} 
+                ingredients={this.props.ings} 
                 checkoutContinued={this.checkoutContinuedHandler}
                 checkoutCancelled={this.checkoutCancelledHandler}
                 />
                 <Route 
                 path={this.props.match.path + '/contact-data'} 
-                render={(props) => (
-                <ContactData ingredients={this.state.ingredients} price={this.state.totalPrice} {...props}/>)} //now we won't have history object in ContactData, that's why we put ...props
-                />
+                component={ContactData}
+               /*  render={(props) => (
+                    <ContactData ingredients={this.props.ings} price={this.props.price} {...props}/>
+                    )} //now we won't have history object in ContactData, that's why we put ...props
+                *//> 
 
                 
             </div>
@@ -48,4 +55,10 @@ checkoutContinuedHandler = () => {
     }
 }
 
-export default Checkout;
+const mapStateToProps = state=> {
+    return {
+        ings: state.ingredients,
+    }
+}
+
+export default connect(mapStateToProps)(Checkout);

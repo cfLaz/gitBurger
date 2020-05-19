@@ -4,6 +4,7 @@ import classes from './ContactData.module.css';
 import axios from '../../Axios-orders';
 import Spinner from '../../components/UI/Spinner'
 import Input from '../../components/UI/Input';
+import {connect} from 'react-redux';
 
 class ContactData extends Component {
     state={
@@ -103,7 +104,7 @@ class ContactData extends Component {
             formData[formElementId] = this.state.orderForm[formElementId].value;
         };
         const order = {
-            ingredients: this.props.ingredients,
+            ingredients: this.props.ings,
             price: this.props.price, //this would ussualy be set up on the server, otherwise, users could manipulate it.
             orderData: formData,
         };
@@ -214,5 +215,11 @@ class ContactData extends Component {
         )
     };
 }
+const mapStoreToProps = state => {
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice,
 
-export default ContactData;
+    }
+};
+export default connect(mapStoreToProps)(ContactData);
