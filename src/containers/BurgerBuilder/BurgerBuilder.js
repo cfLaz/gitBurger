@@ -9,7 +9,8 @@ import Spinner from '../../components/UI/Spinner';
 import errorHandler from '../../hoc/errorHandler';
 //importing with lowercase letter since we are not going to use it in JSX
 import {connect} from 'react-redux';
-import * as actionTypes from '../../store/actions';
+//import * as actionTypes from '../../store/actions/actionTypes';
+import * as bbactions from '../../store/actions/indexA'; // if you point to folder, it automatically goes to index file.
 
 /* const  PRICES = {
     salad: 0.5,
@@ -26,12 +27,13 @@ class BurgerBuilder extends Component {
         } this is an old method
     }*/
     state = {
-       // ingredients: null,
+     /*  // ingredients: null,
     //totalPrice: 4,
    // purchasable: false, //we could've just checked if the price is = 4?
-    purchasing: false,
-    loading: false,
-    error:false,
+   /* loading: false,
+    error:false, */ 
+   purchasing: false,
+    
     }
 
     /* componentDidMount () {
@@ -43,7 +45,9 @@ class BurgerBuilder extends Component {
            }) 
         
     } */
-
+    componentDidMount () {
+        this.props.onInitIng();
+    }
     updatePurchaseState (ingredients) {
 
         const sum = Object.keys(ingredients).map(igKey =>{
@@ -111,6 +115,7 @@ class BurgerBuilder extends Component {
     }
     
     render () {
+
         const disabledInfo = {
             ...this.props.ings
         };
@@ -118,7 +123,7 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0
         }
 
-        let burger= this.state.error ? <p> ingredients cannot be loaded</p> : <Spinner/>;
+        let burger= this.props.error ? <p> ingredients cannot be loaded</p> : <Spinner/>;
 
         let orderSummary= null;
 
@@ -156,9 +161,9 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <=0; //turns to true or false
         }; */
         
-        if(this.state.loading){
+        /* if(this.state.loading){
             orderSummary = <Spinner/>
-        }
+        } */
         return(
             <Aux>
              <Modal 
@@ -171,19 +176,22 @@ class BurgerBuilder extends Component {
         );
     }
 }
+
 const mapStateToProps = state => {
     return {
         ings: state.ingredients,
         totalPrice: state.totalPrice,
+        error: state.error,
 
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngAdded: (ingName) => dispatch({type: actionTypes.ADD_ING, ingName: ingName}),
-        onIngRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_ING, ingName: ingName}),
+        onIngAdded: (ingName) => dispatch(bbactions.addIngredient(ingName)),
+        onIngRemoved: (ingName) => dispatch(bbactions.removeIngredient(ingName)),
+        onInitIng: () => dispatch(bbactions.initIngredients()),
 
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(errorHandler(BurgerBuilder, axios));
+export default connect(mapStateToProps,mapDispatchToProps)(errorHandler(BurgerBuilder, axios)); //still need axios because it's handled from bbA

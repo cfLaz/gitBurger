@@ -109,7 +109,7 @@ class ContactData extends Component {
             orderData: formData,
         };
         //needs to have .json becaue of firebase
-        axios.post('/orders.json', order).then(response => {
+        /* axios.post('/orders.json', order).then(response => {
 
             this.setState({loading:false,});
             this.props.history.push('/');
@@ -119,7 +119,7 @@ class ContactData extends Component {
                     loading:false, 
                     }
                 );
-            });
+            }); */
 
         alert('Бургер се спрема');
     } 
