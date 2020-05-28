@@ -5,4 +5,4 @@ export {
     
 } from './burgerBuilderA';
 
-export {} from './orderA';
+export {purchaseBurger} from './orderA';

@@ -5,6 +5,8 @@ import axios from '../../Axios-orders';
 import Spinner from '../../components/UI/Spinner'
 import Input from '../../components/UI/Input';
 import {connect} from 'react-redux';
+import withErrorHandler from '../../hoc/errorHandler';
+import * as actions from '../../store/actions/indexA';
 
 class ContactData extends Component {
     state={
@@ -84,21 +86,19 @@ class ContactData extends Component {
                               {value: 'economy', displayValue: 'standard'},
                             ]
                 },
-                value: 'hmm',
+                value: 'hmm',//if nothing is chosen
                 valid: true, //added because of disabled button, formIsValid was always undefined (treated as false and can't be changed to true) because we had no 'valid' here, which makes my added checkup for deliveryMethod in inputChangedHandler irrelevant.
                 //actually, it's relevant, I'm doing it because of rules.required
                 validation: {}, //added for the same reason ^ (now my stuff is irrelevant)
             },
         },
-        
-        loading:false,
         formIsValid: false,
     }
 
 
      orderHandler=(event) => {
         event.preventDefault();
-        this.setState( {loading:true});
+        
         const formData = {};
         for (let formElementId in this.state.orderForm){
             formData[formElementId] = this.state.orderForm[formElementId].value;
@@ -108,6 +108,7 @@ class ContactData extends Component {
             price: this.props.price, //this would ussualy be set up on the server, otherwise, users could manipulate it.
             orderData: formData,
         };
+        this.props.onOrderBurger(order);
         //needs to have .json becaue of firebase
         /* axios.post('/orders.json', order).then(response => {
 
@@ -204,7 +205,7 @@ class ContactData extends Component {
         </form>
         );
 
-        if (this.state.loading){
+        if (this.props.loading){
             form = <Spinner/>
         }
         return (
@@ -217,9 +218,17 @@ class ContactData extends Component {
 }
 const mapStoreToProps = state => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice,
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        loading: state.order.loading,
 
     }
 };
-export default connect(mapStoreToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+        
+    }
+}
+
+export default connect(mapStoreToProps,mapDispatchToProps)(withErrorHandler(ContactData, axios));

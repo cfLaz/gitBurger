@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import CheckoutSum from '../../components/Order/CheckoutSummary/CheckoutSummary';
-import {Route} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 import ContactData from './ContactData.js';
 import {connect} from 'react-redux';
 
@@ -33,8 +33,11 @@ checkoutContinuedHandler = () => {
     this.props.history.replace('/checkout/contact-data');
 }
     render () {
-    console.log(this.props);
-        return(
+    //console.log(this.props);
+        let summary = <Redirect to='/'/>;
+
+        if (this.props.ings){
+            summary = (
             <div>
                 <CheckoutSum 
                 ingredients={this.props.ings} 
@@ -48,16 +51,18 @@ checkoutContinuedHandler = () => {
                     <ContactData ingredients={this.props.ings} price={this.props.price} {...props}/>
                     )} //now we won't have history object in ContactData, that's why we put ...props
                 *//> 
-
-                
             </div>
+            );
+        }
+        return(
+          summary            
         )
     }
 }
 
 const mapStateToProps = state=> {
     return {
-        ings: state.ingredients,
+        ings: state.burgerBuilder.ingredients,
     }
 }
 
