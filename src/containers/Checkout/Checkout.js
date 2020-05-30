@@ -3,7 +3,7 @@ import CheckoutSum from '../../components/Order/CheckoutSummary/CheckoutSummary'
 import {Route, Redirect} from 'react-router-dom';
 import ContactData from './ContactData.js';
 import {connect} from 'react-redux';
-
+//import * as actions from '../../store/actions/indexA';
 
 class Checkout extends Component {
 /* state={
@@ -24,7 +24,10 @@ componentWillMount() {//changed from DidMount because it was accessing <Route/> 
     this.setState({ingredients: ingredients, totalPrice: price});
 } */
 
-
+/* WilMount to slow - doesn't prevent rendering of old props we received
+componentWillMount () {
+    this.props.onInitPurchase(); //resets purchased to false
+} */
 
 checkoutCancelledHandler = () => {
     this.props.history.goBack();
@@ -37,8 +40,12 @@ checkoutContinuedHandler = () => {
         let summary = <Redirect to='/'/>;
 
         if (this.props.ings){
+            const purchasedRedirect = this.props.purchased ? <Redirect to='/'/> : null
+
+            
             summary = (
             <div>
+                {purchasedRedirect}
                 <CheckoutSum 
                 ingredients={this.props.ings} 
                 checkoutContinued={this.checkoutContinuedHandler}
@@ -63,7 +70,12 @@ checkoutContinuedHandler = () => {
 const mapStateToProps = state=> {
     return {
         ings: state.burgerBuilder.ingredients,
+        purchased: state.order.purchased,
     }
 }
-
-export default connect(mapStateToProps)(Checkout);
+/* const mapDispatchToProps = dispatch => {
+    return {
+        onInitPurchase: () => dispatch(actions.purchaseInit())
+    };
+}; */
+export default connect(mapStateToProps,)(Checkout);

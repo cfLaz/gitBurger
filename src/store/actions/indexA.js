@@ -5,4 +5,9 @@ export {
     
 } from './burgerBuilderA';
 
-export {purchaseBurger} from './orderA';
+export {
+    purchaseBurger,
+    purchaseInit,
+    fetchOrders,
+
+} from './orderA';

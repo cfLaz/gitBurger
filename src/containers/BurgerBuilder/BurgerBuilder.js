@@ -10,7 +10,7 @@ import errorHandler from '../../hoc/errorHandler';
 //importing with lowercase letter since we are not going to use it in JSX
 import {connect} from 'react-redux';
 //import * as actionTypes from '../../store/actions/actionTypes';
-import * as bbactions from '../../store/actions/indexA'; // if you point to folder, it automatically goes to index file.
+import * as actions from '../../store/actions/indexA'; // if you point to folder, it automatically goes to index file.
 
 /* const  PRICES = {
     salad: 0.5,
@@ -111,7 +111,9 @@ class BurgerBuilder extends Component {
             search: '?' + queryString,
         });
         console.log(this.props) */
+        this.props.onInitPurchase(); //313
         this.props.history.push('/checkout');
+
     }
     
     render () {
@@ -188,9 +190,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngAdded: (ingName) => dispatch(bbactions.addIngredient(ingName)),
-        onIngRemoved: (ingName) => dispatch(bbactions.removeIngredient(ingName)),
-        onInitIng: () => dispatch(bbactions.initIngredients()),
+        onIngAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
+        onIngRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
+        onInitIng: () => dispatch(actions.initIngredients()), //getting ingredients
+        onInitPurchase: ()=> dispatch(actions.purchaseInit())
 
     }
 }
