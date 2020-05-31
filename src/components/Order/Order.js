@@ -26,9 +26,21 @@ const order = (props) => {//if it's just returning JSX we can use () after (prop
                </span>)
     });
  return (
-    <div className={classes.Order}>
+    <div className={classes.Order} >
         <p>Ingredients: {ingOutput}</p> {/* Number.parseFloat to convert string to number, also we could've added '+' to order.price in Orders.js */}
         <p>Price: <strong>USD {Number.parseFloat(props.price).toFixed(2)}</strong></p>
+        <button 
+         style={{
+             marginLeft: '40%',
+             border: '1px solid red',
+             backgroundColor: '#8b380b',
+             color: 'white',
+             borderRadius: '2px',
+         }}
+         onClick={props.deleteOrder}
+        >
+            Remove order
+        </button>
     </div>)
 };
 

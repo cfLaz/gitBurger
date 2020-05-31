@@ -9,5 +9,6 @@ export {
     purchaseBurger,
     purchaseInit,
     fetchOrders,
+    removeOrder,
 
 } from './orderA';

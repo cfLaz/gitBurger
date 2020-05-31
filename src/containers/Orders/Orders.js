@@ -18,6 +18,9 @@ class Orders extends Component {
             return <Order ingredients = {ord.ingredients}/>          
         }
     } */
+    removeOrder = (id) => {
+        return this.props.onRemoveOrder(id);
+    }
     render() {
 /* my shot - stupid syntax error occurs which doesn't make sense
         let orders = (
@@ -33,6 +36,7 @@ class Orders extends Component {
                     key = {order.id}
                     ingredients = {order.ingredients}
                     price = {order.price}
+                    deleteOrder = {() => this.removeOrder(order.id)}
                 />))       
             );
         } 
@@ -53,7 +57,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders: () => dispatch(actions.fetchOrders())
+        onFetchOrders: () => dispatch(actions.fetchOrders()),
+        onRemoveOrder: (id) => dispatch(actions.removeOrder(id))
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(Orders, axios));
