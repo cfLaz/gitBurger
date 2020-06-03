@@ -18,6 +18,8 @@ const navigationItems= (props) => (
         >
             Orders
         </NavItem>
+
+        <NavItem link='auth'>Authenticate</NavItem>
     </ul>
 );
 

@@ -12,3 +12,7 @@ export {
     removeOrder,
 
 } from './orderA';
+
+export {
+    auth,
+} from './authA';
