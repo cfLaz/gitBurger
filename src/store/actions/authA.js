@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
+
 export const authStart = () => {
     return{
         type: actionTypes.AUTH_START,
@@ -7,10 +8,11 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (authData) => {
+export const authSuccess = (token, userId) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        authData:authData,
+        token: token,
+        userId: userId,
     }
 };
 
@@ -20,8 +22,21 @@ export const authFail = (error) => {
         error:error,
     };
 };
+export const logout =() =>  {
+    return {
+        type: actionTypes.AUTH_LOGOUT,
+    }
+};
+//without this, token would expire afer one hour without us knowing, so if we are signed in, we wouldn't proceed with valid token, or could not proceed anywhere at all?
+const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(()=> {
+            dispatch(logout)
+        }, expirationTime * 1000);
+    };
+};
 
-export const auth = (email, password) => {
+export const auth = (email, password,isSignUp) => {
     return dispatch => {
         dispatch(authStart());
         const authData={
@@ -29,13 +44,19 @@ export const auth = (email, password) => {
             password: password,
             returnSecureToken: true,        
         };
-        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBNoBWJbk5XEwrnLpG0PBSs-G4WS13FgPg',authData).then(response => {
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBNoBWJbk5XEwrnLpG0PBSs-G4WS13FgPg';
+        
+        if(!isSignUp){
+            url= 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBNoBWJbk5XEwrnLpG0PBSs-G4WS13FgPg';
+        }
+
+        axios.post(url,authData).then(response => {
             console.log(response);
-            dispatch(authSuccess(response));
-        })
-            .catch(err => {
+            dispatch(authSuccess(response.data.idToken, response.data.localId));
+            dispatch(checkAuthTimeout(response.data.expiresIn));
+        }).catch(err => {
                 console.log(err);
-                dispatch(authFail());
+                dispatch(authFail(err.response.data.error));
             });
     };
 };

@@ -35,13 +35,13 @@ const removeOrder = (state,action) => {
     let updatedOrders = state.orders.slice();
     updatedOrders.splice(k,1);
     //works but doesn't remove from firebase [edit: added axios =>xhr.js:178 OPTIONS https://burger-builder-f9f4f.firebaseio.com/orders/-M8Xr-riuYV5-2-W5EzT 405 (Method Not Allowed)]
-    axios.delete('/orders/'+action.orderId).then(response =>{
+    /* axios.delete('/orders/'+action.orderId).then(response =>{
         console.log(response);
     }).catch(
         err=> {
             console.log(err);
         }
-    );
+    ); */
     return updateObject(state, {orders: updatedOrders});
 }
 

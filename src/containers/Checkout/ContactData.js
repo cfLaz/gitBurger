@@ -108,7 +108,7 @@ class ContactData extends Component {
             price: this.props.price, //this would ussualy be set up on the server, otherwise, users could manipulate it.
             orderData: formData,
         };
-        this.props.onOrderBurger(order);
+        this.props.onOrderBurger(order, this.props.token);
         //needs to have .json becaue of firebase
         /* axios.post('/orders.json', order).then(response => {
 
@@ -221,12 +221,13 @@ const mapStoreToProps = state => {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
         loading: state.order.loading,
+        token: state.auth.token,
 
     }
 };
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+        onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token)),
         
     }
 }

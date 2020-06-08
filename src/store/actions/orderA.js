@@ -21,10 +21,10 @@ export const purchaseBstart = () =>{
         type:actionTypes.PURCHASE_BRG_START
     }
 }
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = (orderData, token) => {
     return dispatch =>{
         dispatch(purchaseBstart()); //dispatched to the store
-        axios.post('/orders.json', orderData)
+        axios.post('/orders.json?auth='+token, orderData)
         .then(response => {
             console.log(response.data);
                 dispatch(purchaseBsuccess(response.data.name, orderData));
@@ -65,11 +65,12 @@ export const removeOrder =(id) => { //I added
         orderId: id,
     }
 }
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
+    //in action (return) we could add getState as second argument next to dispatch but it's not recommended usually 
     return dispatch => {
         dispatch (fetchOrdersStart);
 
-        axios.get('/orders.json').then(
+        axios.get('/orders.json?auth='+ token).then(
             response => {
                  console.log(response.data); //receiving JSON object, not an array
                  const fetchedOrders = [];
