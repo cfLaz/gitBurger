@@ -51,7 +51,7 @@ export const auth = (email, password,isSignUp) => {
         }
 
         axios.post(url,authData).then(response => {
-            console.log(response);
+            console.log(response); //here is where we get the token
             dispatch(authSuccess(response.data.idToken, response.data.localId));
             dispatch(checkAuthTimeout(response.data.expiresIn));
         }).catch(err => {

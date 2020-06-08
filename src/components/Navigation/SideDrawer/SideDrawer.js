@@ -14,14 +14,19 @@ const sideDrawer= (props) => {
 
     return (
       <Aux>
+
         <Bdrop show={props.open} clicked={props.closed}/>
+        
         <div className={attachedClasses.join(' ')}>
+
             <div className={classes.Logo}>
                 <Logo />
             </div>
+
             <nav>
-                <NavItems/>
+              <NavItems isAuthenticated={props.isAuth}/>
             </nav>
+
         </div>  
       </Aux>
     );

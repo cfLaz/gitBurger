@@ -69,7 +69,7 @@ export const fetchOrders = (token) => {
     //in action (return) we could add getState as second argument next to dispatch but it's not recommended usually 
     return dispatch => {
         dispatch (fetchOrdersStart);
-
+                            //this is the authentication
         axios.get('/orders.json?auth='+ token).then(
             response => {
                  console.log(response.data); //receiving JSON object, not an array

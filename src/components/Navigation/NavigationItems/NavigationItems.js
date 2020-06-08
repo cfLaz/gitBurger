@@ -6,20 +6,21 @@ const navigationItems= (props) => (
     <ul className={classes.NavItems}>
         
         <NavItem
-        link='/'
-        exact
-        //active//boolean properties can be setup like this (without active={true})  
-        >
+        link='/'  exact
+        /*active//boolean properties can be setup like this (without active={true})  */>
             Burger Builder
         </NavItem>
 
-        <NavItem
-        link='/orders'
-        >
-            Orders
-        </NavItem>
+        {!props.isAuthenticated
+         ? <NavItem link='/orders'>
+             Orders
+           </NavItem> : null
+        }
+        {!props.isAuthenticated 
+          ? <NavItem link='/auth'>Authenticate</NavItem>
+          : <NavItem link='/logout'>Log out</NavItem>
+        }
 
-        <NavItem link='auth'>Authenticate</NavItem>
     </ul>
 );
 

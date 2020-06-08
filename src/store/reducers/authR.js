@@ -1,7 +1,6 @@
 /* eslint-disable default-case */
 import * as actions from '../actions/actionTypes';
 import {updateObject} from '../utility';
-import { logout } from '../actions/authA';
 
 const initialState ={
     token: null,

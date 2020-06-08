@@ -15,4 +15,5 @@ export {
 
 export {
     auth,
+    logout
 } from './authA';
