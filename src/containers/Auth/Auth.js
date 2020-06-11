@@ -101,11 +101,12 @@ class Auth extends Component{
             formElementsArray.push({
                 id: key,
                 config: this.state.controls[key],
-            }) // [{id: name, config: 'everything in name'}, {}...]
+            }) // [{id: email, config: 'everything in email'}, {}...]
         }
+        // 2 elements in the form, email and password.
         let form =formElementsArray.map(formEl => (
            <Input
-             key={formEl.id}
+             key={formEl.id} // key is added in above for loop
              elementType={formEl.config.elementType} 
              elementConfig={formEl.config.elementConfig}
              value={formEl.config.value}

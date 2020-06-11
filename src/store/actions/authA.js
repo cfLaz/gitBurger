@@ -86,17 +86,19 @@ export const authCheckState =() => {
         if (!token) {
             dispatch(logout());
 
-        } else {                //converting string to date objcet
+        } else {                //converting string to date object
             const expirationDate = new Date(localStorage.getItem('expirationDate')); 
 
-            if (expirationDate > new Date()){
+            if (expirationDate <= new Date()){
                 dispatch(logout());
             } else {
                 const userId = localStorage.getItem('userId');
                 dispatch(authSuccess(token, userId));
                 //can fetch id from firebase (337 - 9:30)
 
-                dispatch(checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds() ));
+                dispatch(checkAuthTimeout(
+                    (expirationDate.getTime() - new Date().getTime()) / 1000 )); //getTime() gives us time in miliseconds (338 05:40)
+
             }
         }
     }

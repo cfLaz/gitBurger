@@ -65,12 +65,14 @@ export const removeOrder =(id) => { //I added
         orderId: id,
     }
 }
-export const fetchOrders = (token) => {
-    //in action (return) we could add getState as second argument next to dispatch but it's not recommended usually 
+export const fetchOrders = (token, userId) => {
+    //in action (return) we could add getState as second argument next to dispatch but it's not usually recommended 
     return dispatch => {
         dispatch (fetchOrdersStart);
+                                                //understood by firebase (341, 4:20)
+        const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="'+ userId+'"';
                             //this is the authentication
-        axios.get('/orders.json?auth='+ token).then(
+        axios.get('/orders.json'+ queryParams).then(
             response => {
                  console.log(response.data); //receiving JSON object, not an array
                  const fetchedOrders = [];
