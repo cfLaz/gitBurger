@@ -7,6 +7,7 @@ const initialState = {
     ingredients:null,
     totalPrice: 4,
     error: false,
+    building: false, // used when redirecting from Auth page which we accessed from Sign in to order button
 };
 const  PRICES = {
     salad: 0.5,
@@ -22,6 +23,7 @@ const addIngredient = (state,action) => {
     const updatedState = {
         ingredients: updatedIngs,
         totalPrice: state.totalPrice + PRICES[action.ingName],
+        building: true,
     }
     return updateObject(state, updatedState)
 }
@@ -45,6 +47,7 @@ const setIngredients = (state,action) => {
         },
         error:false,
         totalPrice: 4,
+        building: false,
       }
     
     return updateObject(state,updatedSetIngs); 

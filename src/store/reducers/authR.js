@@ -7,6 +7,7 @@ const initialState ={
     userID:null,
     error: null,
     loading: false,
+    authRedirectPath: '/',
 };
 const authStart =(state,action) => {
     return updateObject(state, {error: null, loading: true}) 
@@ -32,6 +33,11 @@ const authLogout = (state,action) => {
     //token: null would not work if I return updateObject in {}
     return updateObject(state, {token: null, userID: null });
 };
+
+const setAuthRedirectPath = (state,action) => {
+    return updateObject(state, {authRedirectPath: action.path})
+}
+
 const reducer = (state=initialState, action) => {
     switch (action.type){
 
@@ -43,6 +49,8 @@ const reducer = (state=initialState, action) => {
         case actions.AUTH_FAIL: return authFailed(state,action)
 
         case actions.AUTH_LOGOUT: return authLogout(state,action)
+        
+        case actions.SET_AUTH_REDIRECT_PATH: return setAuthRedirectPath(state,action)
 
         default:
             return state;
