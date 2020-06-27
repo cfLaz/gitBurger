@@ -6,6 +6,7 @@ import * as actions from '../../store/actions/indexA';
 import {connect} from 'react-redux';
 import Spinner from '../../components/UI/Spinner';
 import {Redirect} from 'react-router-dom';
+import {updateObject, checkValidity} from '../../shared/utility';
 
 class Auth extends Component{
 
@@ -47,30 +48,7 @@ class Auth extends Component{
             this.props.onSetAuthRedirectPath(); //shoot me to te burger builder to add some ingredients.
         }
     }
-    checkValidity(value, rules, id){
-        let isValid = true;
-        //if(!rules) return true; -another way of avoiding undefined
-        if(rules.required){ //isValid depends on if string is empty or not
-            isValid = value.trim()!== '' && isValid;
-            // .trim() removes any whitespace at the beginning and the end
-        };
-        if (rules.minLength) {
-            isValid = (value.length >= rules.minLength && isValid);
-        };
-        if (rules.maxLength) {
-            isValid = (value.length <= rules.maxLength && isValid);
-        }
-        if(rules.Email){
-            //need to add email validity
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid
-        }
-        /* my setup ** 
-        if (rules.minLength) {
-            isValid = (value.length >= rules.minLength) && (value.length <= rules.maxLength);
-        } */
-        return isValid;
-    }
+    
     submitHandler =(event) => {
         event.preventDefault();
         this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value, this.state.isSignUp);
@@ -78,17 +56,18 @@ class Auth extends Component{
     };
 
     inputChangedHandler = (event, controlName) => {
-      const updatedControls ={
-          ...this.state.controls,
-          [controlName]: { //email,password
-              ...this.state.controls[controlName], //elType,elConfig, etc.
-              value: event.target.value,
-              valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
-              touched: true,
-          }
-      };
+
+      const updatedControls = updateObject(this.state.controls, 
+           {[controlName]: updateObject(this.state.controls[controlName], {
+               value: event.target.value,
+               valid: checkValidity(event.target.value, this.state.controls[controlName].validation),
+               touched: true,
+             })
+           })
+    
       this.setState({controls: updatedControls})
     }
+
     switchAuthModeHandler = () => {
         this.setState(prevState => {
             return {isSignUp: !prevState.isSignUp}
@@ -139,6 +118,7 @@ class Auth extends Component{
                     Log in
                   </Button>
                 </form>
+
                 <Button btnType='Danger' clicked={this.switchAuthModeHandler}>
                     Switch to {this.state.isSignUp ? 'Sign in' : 'Sign up'}
                 </Button>

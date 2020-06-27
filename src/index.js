@@ -12,7 +12,7 @@ import orderReducer from './store/reducers/orderR';
 import thunk from 'redux-thunk';
 import authReducer from './store/reducers/authR';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = process.env.REACT_APP_NODE_ENVX === "development" ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose; //348
 
 const rootReducer = combineReducers({
     burgerBuilder: bbreducer,

@@ -1,14 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
+import asyncComp from './hoc/asyncComponent';
 import Layout from './containers/Layout/Layout';
 //import bb from './containers/BurgerBuilder/BurgerBuilder';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
-import Checkout from './containers/Checkout/Checkout';
 import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
-import Orders from './containers/Orders/Orders';
-import Auth from './containers/Auth/Auth';
+//import Orders from './containers/Orders/Orders';
 import Logout from './containers/Auth/Logout';
 import {connect} from 'react-redux';
 import * as actions from './store/actions/indexA';
+
+const Auth = React.lazy(() => import('./containers/Auth/Auth'));
+
+const asyncCheckout = asyncComp( () => {
+  return import('./containers/Checkout/Checkout');
+})
+
+//Max approach (better)
+const asyncOrders = asyncComp( () => {
+  return import('./containers/Orders/Orders');
+})
+
 class App extends Component {
   /* state = {
     show: true
@@ -25,7 +36,11 @@ class App extends Component {
 
     let routes =(
       <Switch> {/* picks the first hit */}
-        <Route path='/auth' component={Auth}/>
+        <Route path='/auth' render={()=>(
+            <Suspense fallback={<div>'lalala</div>}>
+              <Auth/>
+            </Suspense>
+          )}/>
         <Route path='/' exact component={BurgerBuilder}/> 
         <Redirect to='/' /> {/* added so if we go to orders mannualy it wil redirect back to begining */}
       </Switch>
@@ -35,9 +50,14 @@ class App extends Component {
       routes= ( 
         <Switch>
           <Route path='/' exact component={BurgerBuilder}/>
-          <Route path='/checkout' component={Checkout}/>
-          <Route path='/orders' component ={Orders}/>
+          <Route path='/checkout' component={asyncCheckout}/>
+          <Route path='/orders' component ={asyncOrders}/>
           <Route path='/logout' component ={Logout}/>);
+          <Route path='/auth' render={()=>(
+            <Suspense fallback={<div>'lalala</div>}>
+              <Auth/>
+            </Suspense>
+          )}/> {/* wasn't here, added in 345 video. REdirected me to '/' instead */}
           <Redirect to='/' />
         </Switch>
       );

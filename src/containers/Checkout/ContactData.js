@@ -7,6 +7,7 @@ import Input from '../../components/UI/Input';
 import {connect} from 'react-redux';
 import withErrorHandler from '../../hoc/errorHandler';
 import * as actions from '../../store/actions/indexA';
+import { updateObject, checkValidity } from '../../shared/utility';
 
 class ContactData extends Component {
     state={
@@ -126,41 +127,28 @@ class ContactData extends Component {
         alert('Бургер се спрема');
     } 
 
-    checkValidity(value, rules, id){
-        let isValid = true;
-        //if(!rules) return true; -another way of avoiding undefined
-        if(rules.required){ //isValid depends on if string is empty or not
-            isValid = value.trim()!== '' && isValid;
-            // .trim() removes any whitespace at the beginning and the end
-        };
-        if (rules.minLength) {
-            isValid = (value.length >= rules.minLength && isValid);
-        };
-        if (rules.maxLength) {
-            isValid = (value.length <= rules.maxLength && isValid);
-        }
-        if(id === 'email'){
-            //need to add email validity
-        }
-        /* my setup ** 
-        if (rules.minLength) {
-            isValid = (value.length >= rules.minLength) && (value.length <= rules.maxLength);
-        } */
-        return isValid;
-    }
-
+    
     inputChangedHandler = (event, inputIdentifier) => {
         //console.log(event.target.value);
-        const updatedOrderForm = { //need to clone deeply, ...this.state.orderForn does not create a deep clone (it creates copied object and its properties, but its properties are nested object and properties within them won't be cloned (it would ne just poinet to them) and that way we mutate the original state unfortunately)
+        /* const updatedOrderForm = { //need to clone deeply, ...this.state.orderForm does not create a deep clone (it creates copied object and its properties, but its properties are nested object and properties within them won't be cloned (it would ne just poinet to them) and that way we mutate the original state unfortunately)
             ...this.state.orderForm
-        } ;  
+        } ;  */ 
                                             /*email, name...for elementConfig we would have to clone deeply again*/
-        const updatedFormEl= {...updatedOrderForm[inputIdentifier]};
+        //const updatedFormEl= {...updatedOrderForm[inputIdentifier]};
+        const updatedFormEl=updateObject(this.state.orderForm[inputIdentifier],{
+            value: event.target.value,
+            valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation, inputIdentifier),
+            touched: true,
+        })
 
-        updatedFormEl.value = event.target.value;
+        const updatedOrderForm = updateObject(this.state.orderForm, {
+            [inputIdentifier]: updatedFormEl
+        })
+
+        /* updatedFormEl.value = event.target.value;
         updatedFormEl.touched=true;
         //I added if condition  bcz it throws an error in checkValidity because rules.required is undefined (later discussed in the course 248)
-        if(inputIdentifier !== 'deliveryMethod')updatedFormEl.valid=this.checkValidity(updatedFormEl.value, updatedFormEl.validation, inputIdentifier); //I added 3rd atribute bcz of email
+        if(inputIdentifier !== 'deliveryMethod')updatedFormEl.valid=this.checkValidity(updatedFormEl.value, updatedFormEl.validation, inputIdentifier); //I added 3rd atribute bcz of email */
 
         let formIsValid = true;
         for (let inputId in updatedOrderForm) {
@@ -170,8 +158,9 @@ class ContactData extends Component {
         //console.log(updatedFormEl.valid);
         updatedOrderForm[inputIdentifier] = updatedFormEl;
         this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
-
+        updateObject(this.state, )
     }
+
     render() {
         const formElementsArray =[];
 

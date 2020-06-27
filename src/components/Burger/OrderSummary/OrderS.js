@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import Aux from '../../../hoc/Auxilary';
 import Button from '../OrderSummary/Button/Button';
 
-class OrderS extends Component {
-    componentDidUpdate(){
+class OrderS extends Component { //could convert this to functional component as we are just rendering stuff (would optimize the app more)
+    /* componentDidUpdate(){
         console.log('OrderSummary did update')
-    }
+    } */
     render(){
        
         const ingSummary = Object.keys(this.props.ingredients)
