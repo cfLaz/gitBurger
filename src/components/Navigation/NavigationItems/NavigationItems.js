@@ -3,6 +3,7 @@ import classes from './NavItems.module.css';
 import NavItem from './NavigationItem/NavigationItem'
 
 const navigationItems= (props) => (
+    
     <ul className={classes.NavItems}>
         
         <NavItem
