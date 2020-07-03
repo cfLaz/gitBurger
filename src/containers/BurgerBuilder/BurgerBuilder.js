@@ -19,7 +19,7 @@ import * as actions from '../../store/actions/indexA'; // if you point to folder
     bacon: 0.7,
 }; */
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
     /*state = {
         constructor(props){
             super(props);
@@ -137,31 +137,32 @@ class BurgerBuilder extends Component {
 
         if(this.props.ings) {
             
-        burger = (
+          burger = (
             <Aux>
                 <Burger 
                     ingredients={this.props.ings}
                 />
 
-                        <div>
-                            <BCs
-                            ingAdded={this.props.onIngAdded}
-                            ingRemoved={this.props.onIngRemoved}
-                            disabled={disabledInfo}
-                            price={this.props.totalPrice}
-                            purchasable={this.updatePurchaseState(this.props.ings)}
-                            ordered={this.purchaseHandler}
-                            isAuth={this.props.isAthenticated}
-                            />
-                        </div>
+                <div>
+                    <BCs
+                        ingAdded={this.props.onIngAdded}
+                        ingRemoved={this.props.onIngRemoved}
+                        disabled={disabledInfo}
+                        price={this.props.totalPrice}
+                        purchasable={this.updatePurchaseState(this.props.ings)}
+                        ordered={this.purchaseHandler}
+                        isAuth={this.props.isAthenticated}
+                    />
+                </div>
             </Aux>
         );
-        orderSummary = <OrderS 
-        ingredients={this.props.ings}
-        purchaseCanceled={this.purchaseCancelHandler}
-        purchaseContinued={this.purchaseContinueHandler}
-        price={this.props.totalPrice}
-        /> 
+            
+          orderSummary = <OrderS 
+            ingredients={this.props.ings}
+            purchaseCanceled={this.purchaseCancelHandler}
+            purchaseContinued={this.purchaseContinueHandler}
+            price={this.props.totalPrice}
+          /> 
         }
         /* const disabledInfo = {
             ...this.state.ingredients

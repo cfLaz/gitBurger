@@ -6,7 +6,7 @@ import {configure, shallow} from 'enzyme' ;
  import NavItems from './NavigationItems';
  import NavItem from './NavigationItem/NavigationItem';
 
-configure ( {adapter: new Adapter()}); //with this, anzyme is connected
+configure ( {adapter: new Adapter()}); //with this, anzyme is connected (for JSX?)
 let wrapper;
 //executed before each test
 beforeEach(()=> {
@@ -27,6 +27,13 @@ describe('<NavigationItems />', () => {
         
         wrapper.setProps({isAuthenticated: true})
         expect(wrapper.find(NavItem)).toHaveLength(3); 
+        
+    })
+
+    it('shuold expect logout button', () => {           
+        
+        wrapper.setProps({isAuthenticated: true})
+        expect(wrapper.contains(<NavItem link='/logout'>Log out</NavItem>)).toEqual(true); 
         
     })
 })
