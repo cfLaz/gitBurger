@@ -22,13 +22,16 @@ export const authFail = (error) => {
         error:error,
     };
 };
+
+// there are some actions that are not directly related to changing redux-store,
+//this is not bad but if we want our actions to have "cleaner code" we could use Redux Saga
 export const logout =() =>  {
-    localStorage.removeItem('expirationDate');
+    /* localStorage.removeItem('expirationDate');
     localStorage.removeItem('token');
-    localStorage.removeItem('userID');
+    localStorage.removeItem('userID'); */
 
     return {
-        type: actionTypes.AUTH_LOGOUT,
+        type: actionTypes.AUTH_INITIATE_LOGOUT,
     }
 };
 //without this, token would expire afer one hour without us knowing, so if we are signed in, we wouldn't proceed with valid token, or could not proceed anywhere at all?
