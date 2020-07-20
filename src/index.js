@@ -13,7 +13,7 @@ import ReduxThunk from 'redux-thunk';
 import authReducer from './store/reducers/authR';
 import createSagaMiddleware from 'redux-saga';
 //import {logoutSaga} from './store/sagas/authS';
-import {watchAuth} from './store/sagas/indexS';
+import {watchAuth, watchBB} from './store/sagas/indexS';
 
 
 const composeEnhancers = process.env.REACT_APP_NODE_ENVX === "development" ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose; //348
@@ -31,9 +31,10 @@ const store = createStore(
     );
 
 sagaMiddleware.run(watchAuth);
+sagaMiddleware.run(watchBB);
 
 const app=(
-    /* provider wraps BR */
+    /* provider wraps BR, The <Provider /> makes the Redux store available to any nested components that have been wrapped in the connect() function.*/
     <Provider store={store}>  
     <BrowserRouter>
         <App/>

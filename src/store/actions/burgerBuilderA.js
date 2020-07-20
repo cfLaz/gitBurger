@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
-import axios from '../../Axios-orders';
-
+//import axios from '../../Axios-orders';
+ 
 export const addIngredient = (name) => {
     return {
         type: actionTypes.ADD_ING,
@@ -29,6 +29,12 @@ export const fetchIngFailed = () => {
 }
 
 export const initIngredients = () => {
+    return {
+        type: actionTypes.INIT_ING
+    };
+};
+
+/* export const initIngredients = () => {
     //available bcz of redux-thunk
     return dispatch => {
         axios.get('https://burger-builder-f9f4f.firebaseio.com/ingredients.json').then(
@@ -38,4 +44,4 @@ export const initIngredients = () => {
               dispatch(fetchIngFailed());
            })
     };
-};
+}; */

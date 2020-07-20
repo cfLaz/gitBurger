@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from './actionTypes';
 import axios from '../../Axios-orders';
 
 export const purchaseBsuccess = (id, orderData) => {
@@ -21,13 +21,16 @@ export const purchaseBstart = () =>{
         type:actionTypes.PURCHASE_BRG_START
     }
 }
+//appears in ContactData
 export const purchaseBurger = (orderData, token) => {
     return dispatch =>{
+
         dispatch(purchaseBstart()); //dispatched to the store
+        
         axios.post('/orders.json?auth='+token, orderData)
         .then(response => {
             console.log(response.data);
-                dispatch(purchaseBsuccess(response.data.name, orderData));
+            dispatch(purchaseBsuccess(response.data.name, orderData));
         }).catch( error=> {
                 console.log(error);
                 dispatch(purchaseBfailed(error));

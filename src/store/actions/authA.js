@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
+//import axios from 'axios';
 
 export const authStart = () => {
     return{
@@ -34,14 +34,24 @@ export const logout =() =>  {
         type: actionTypes.AUTH_INITIATE_LOGOUT,
     }
 };
+export const logoutSucceed =()=> {
+    return{type: actionTypes.AUTH_LOGOUT};
+}
+
 //without this, token would expire afer one hour without us knowing, so if we are signed in, we wouldn't proceed with valid token, or could not proceed anywhere at all?
-const checkAuthTimeout = (expirationTime) => {
+/* const checkAuthTimeout = (expirationTime) => {
     return dispatch => {
         setTimeout(()=> {
             dispatch(logout)
         }, expirationTime * 1000);
     };
-};
+}; */
+export const checkAuthTimeout = (expirationTime) => {
+    return {
+        expirationTime: expirationTime, //this is 'action' in saga
+        type: actionTypes.AUTH_CHECK_TIMEOUT,
+    }
+}
 
 export const setAuthRedirectPath = (path) => {
     return {
@@ -49,9 +59,12 @@ export const setAuthRedirectPath = (path) => {
       path: path,
     }
 }
-export const auth = (email, password,isSignUp) => {
+
+/* export const auth = (email, password,isSignUp) => {
     return dispatch => {
+
         dispatch(authStart());
+
         const authData={
             email: email,
             password: password,
@@ -64,7 +77,7 @@ export const auth = (email, password,isSignUp) => {
         }
 
         axios.post(url,authData).then(response => {
-         //   console.log(response); //here is where we get the token
+            console.log(response); //here is where we get the token
             
             const expirationDate= new Date(new Date().getTime() + response.data.expiresIn *1000 )
             localStorage.setItem('token', response.data.idToken);
@@ -81,9 +94,24 @@ export const auth = (email, password,isSignUp) => {
                 dispatch(authFail(err.response.data.error));
             });
     };
+}; */
+
+export const auth = (email, password,isSignUp) => {
+    return {
+        type: actionTypes.AUTH,
+        email: email,
+        password: password,
+        isSignUp: isSignUp,
+    };
 };
 
 export const authCheckState =() => {
+    return{
+        type: actionTypes.AUTH_CHECK_STATE,
+    }
+}
+
+/* export const authCheckState =() => {
     return dispatch => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -105,4 +133,4 @@ export const authCheckState =() => {
             }
         }
     }
-}
+} */

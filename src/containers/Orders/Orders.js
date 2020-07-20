@@ -5,6 +5,7 @@ import withErrorHandler from '../../hoc/errorHandler';
 import * as actions from '../../store/actions/indexA';
 import {connect} from 'react-redux';
 import Spinner from '../../components/UI/Spinner';
+
 class Orders extends Component {
     
     componentDidMount() //because it will always be re-mounted so there is no need for componentDidUpdate()
