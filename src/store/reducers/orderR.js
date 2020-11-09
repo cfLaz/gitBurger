@@ -7,7 +7,7 @@ const initialState = {
 orders: [],
 loading: false,
 purchased: false,
-
+//date: null,
 
 };
 const purchaseBsuccess = (state, action) => {
@@ -45,6 +45,7 @@ const removeOrder = (state,action) => {
     return updateObject(state, {orders: updatedOrders});
 }
 
+
 const reducer = (state =initialState, action) => {
 
     switch (action.type) {
@@ -63,7 +64,8 @@ const reducer = (state =initialState, action) => {
         case actionTypes.FETCH_ORDER_SUCCESS:
             return updateObject(state, {
                 loading: false,
-                orders:action.orders,
+                orders: action.orders,
+                //date: action.date,
             })
 
          case actionTypes.FETCH_ORDER_FAIL: return updateObject(state, {loading: false});

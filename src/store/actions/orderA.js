@@ -45,6 +45,7 @@ export const purchaseInit =() => {
 
 
 export const fetchOrdersSuccess = (orders) => {
+     
     return {
         type: actionTypes.FETCH_ORDER_SUCCESS,
         orders: orders,
@@ -77,11 +78,11 @@ export const fetchOrders = (token, userId) => {
                             //this is the authentication
         axios.get('/orders.json'+ queryParams).then(
             response => {
-                 //console.log(response.data); //receiving JSON object, not an array
+                 console.log(response.data); //receiving JSON object, not an array
                  const fetchedOrders = [];
                  for (let key in response.data){ //IDs are 'key's here, to not lose the ID we are pushing a new object in which we are adding the ID
                      fetchedOrders.push({
-                         ...response.data[key],
+                         ...response.data[key], //entire order information
                          id:key,
                      });
                  }

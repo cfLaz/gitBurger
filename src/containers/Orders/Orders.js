@@ -38,12 +38,12 @@ class Orders extends Component {
                     ingredients = {order.ingredients}
                     price = {order.price}
                     deleteOrder = {() => this.removeOrder(order.id)}
+                    date={order.date}
                 />))       
             );
         } 
         return (
             <div>{/*my shot -  */}
-            
                 {orders}
             </div>
         );

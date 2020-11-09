@@ -1,0 +1,2 @@
+Purchase_burger_success shows last and I want it to be before clearing state.
+If I remove clear initial state, then PURCHASE_BURGER_SUCCESS goes before INIT_ING and SET_INGREDIENTS, so I need to make some adjustments so that order is like that with clearing initial state being used.

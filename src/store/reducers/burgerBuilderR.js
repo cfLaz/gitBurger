@@ -52,7 +52,16 @@ const setIngredients = (state,action) => {
     
     return updateObject(state,updatedSetIngs); 
 }
+const defaultInitialState = (state) => {
+    console.log('reverting to default InitialState')
 
+    return updateObject(state, {//forgot to add return before
+        ingredients:null,
+        totalPrice: 4,
+        error: false,
+        building: false, 
+    })
+}
 
 const reducer = (state= initialState, action) => {
     switch(action.type) {
@@ -74,6 +83,8 @@ const reducer = (state= initialState, action) => {
 
         case actionTypes.FETCH_ING_FAILED: return updateObject(state, {error: true})
 
+        case actionTypes.CLEAR_ING: return defaultInitialState(state)
+        
         default: return state;
     }
 

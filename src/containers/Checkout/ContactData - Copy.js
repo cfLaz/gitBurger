@@ -97,32 +97,44 @@ class ContactData extends Component {
     }
 
 
-    orderHandler=  (event) => {
+     orderHandler=(event) => {
         event.preventDefault();
         
         const formData = {};
         for (let formElementId in this.state.orderForm){
             formData[formElementId] = this.state.orderForm[formElementId].value;
         };
-
-        let d = new Date();
-        let date = d.getDate()+ ' ' + d.getMonth()+ ' ' +d.getFullYear();
         const order = {
             ingredients: this.props.ings,
             price: this.props.price, //this would ussualy be set up on the server, otherwise, users could manipulate it.
             orderData: formData,
             userId: this.props.userId,
-            date: date,
         };
         this.props.onOrderBurger(order, this.props.token);
+        //needs to have .json becaue of firebase
+        /* axios.post('/orders.json', order).then(response => {
 
-        //this.props.onClearIngredients(); //doesn't work like I want..works now 
+            this.setState({loading:false,});
+            this.props.history.push('/');
+            }).catch( error=> {
+                console.log(error);
+                this.setState({
+                    loading:false, 
+                    }
+                );
+            }); */
+
         alert('Бургер се спрема');
     } 
 
     
     inputChangedHandler = (event, inputIdentifier) => {
-        
+        //console.log(event.target.value);
+        /* const updatedOrderForm = { //need to clone deeply, ...this.state.orderForm does not create a deep clone (it creates copied object and its properties, but its properties are nested object and properties within them won't be cloned (it would ne just poinet to them) and that way we mutate the original state unfortunately)
+            ...this.state.orderForm
+        } ;  */ 
+                                            /*email, name...for elementConfig we would have to clone deeply again*/
+        //const updatedFormEl= {...updatedOrderForm[inputIdentifier]};
         const updatedFormEl=updateObject(this.state.orderForm[inputIdentifier],{
             value: event.target.value,
             valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation, inputIdentifier),
@@ -132,6 +144,11 @@ class ContactData extends Component {
         const updatedOrderForm = updateObject(this.state.orderForm, {
             [inputIdentifier]: updatedFormEl
         })
+
+        /* updatedFormEl.value = event.target.value;
+        updatedFormEl.touched=true;
+        //I added if condition  bcz it throws an error in checkValidity because rules.required is undefined (later discussed in the course 248)
+        if(inputIdentifier !== 'deliveryMethod')updatedFormEl.valid=this.checkValidity(updatedFormEl.value, updatedFormEl.validation, inputIdentifier); //I added 3rd atribute bcz of email */
 
         let formIsValid = true;
         for (let inputId in updatedOrderForm) {
@@ -202,7 +219,7 @@ const mapStoreToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token)),
-        onClearIngredients: ()=> dispatch(actions.clearIngredients())
+        
     }
 }
 

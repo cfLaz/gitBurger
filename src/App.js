@@ -10,6 +10,7 @@ import {connect} from 'react-redux';
 import * as actions from './store/actions/indexA';
 
 const Auth = React.lazy(() => import('./containers/Auth/Auth'));
+//does what is done manually below with asyncComp
 
 const asyncCheckout = asyncComp( () => {
   return import('./containers/Checkout/Checkout');

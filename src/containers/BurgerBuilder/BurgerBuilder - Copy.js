@@ -12,21 +12,40 @@ import {connect} from 'react-redux';
 //import * as actionTypes from '../../store/actions/actionTypes';
 import * as actions from '../../store/actions/indexA'; // if you point to folder, it automatically goes to index file.
 
+/* const  PRICES = {
+    salad: 0.5,
+    cheese: 0.4,
+    meat: 1.3,
+    bacon: 0.7,
+}; */
+
 export class BurgerBuilder extends Component {
-    
+    /*state = {
+        constructor(props){
+            super(props);
+            this.state={...}
+        } this is an old method
+    }*/
     state = {
+     /*  // ingredients: null,
+    //totalPrice: 4,
+   // purchasable: false, //we could've just checked if the price is = 4?
+   /* loading: false,
+    error:false, */ 
         purchasing: false,
     }
 
+    /* componentDidMount () {
+        axios.get('https://burger-builder-f9f4f.firebaseio.com/ingredients.json').then(
+           response => {
+               this.setState({ingredients: response.data});
+           }).catch(error=> {
+               this.setState({error: true})
+           }) 
+        
+    } */
     componentDidMount () {
-        console.log(this.props.ings);
-
-        /* if(!this.props.ings){ //I added this so when we come back to main page, previosly put ingredients will stay
-            console.log('entering if condition where onInitIng is triggered')
-            //temporary, not good
-            //setTimeout(()=> {this.props.onInitIng()}, 1000) */
-            this.props.onInitIng()
-        //}
+        this.props.onInitIng();
     }
     updatePurchaseState (ingredients) {
 
@@ -39,7 +58,32 @@ export class BurgerBuilder extends Component {
         return sum>0; //changed due to redux impact on the project
     };
 
+    /* addIng = (type) => {
+        const oldCount = this.state.ingredients[type];
+        const updatedCount = oldCount +1;
+        const updatedIng={...this.state.ingredients};
+        updatedIng[type] = updatedCount;
+        const priceAddition = PRICES[type];
+        const oldPrice = this.state.totalPrice;
+        const newPrice = oldPrice + priceAddition;
+        this.setState({totalPrice:newPrice, ingredients:updatedIng});
+        this.updatePurchaseState(updatedIng);
+    };
 
+    removeIng = (type) => {
+        const oldCount = this.state.ingredients[type];
+        let updatedCount =null;
+        if(oldCount<=0) return;
+        else {updatedCount = oldCount -1};
+
+        const updatedIng={...this.state.ingredients};
+        updatedIng[type] = updatedCount;
+        const priceDeduction = PRICES[type];
+        const oldPrice = this.state.totalPrice;
+        const newPrice = oldPrice - priceDeduction;
+        this.setState({totalPrice:newPrice, ingredients:updatedIng});
+        this.updatePurchaseState(updatedIng);
+    }; */
 
     purchaseHandler = () => { 
         if(this.props.isAthenticated){
@@ -54,7 +98,24 @@ export class BurgerBuilder extends Component {
         this.setState({purchasing: false});
     }
     purchaseContinueHandler = () => { 
-       
+        /* this.setState ( {loading:true,});
+         */
+        /* const queryParams = [];
+        console.log(this.props)
+        for (let i in this.state.ingredients){
+            queryParams.push(
+                encodeURIComponent(i)+'='+ encodeURIComponent(this.state.ingredients[i])
+            );
+        }
+        
+        queryParams.push('price=' + this.state.totalPrice); 
+        const queryString = queryParams.join('&');
+        
+        this.props.history.push({
+            pathname:'/checkout',
+            search: '?' + queryString,
+        });
+        console.log(this.props) */
         this.props.onInitPurchase(); //313
         this.props.history.push('/checkout');
 
@@ -102,7 +163,16 @@ export class BurgerBuilder extends Component {
             price={this.props.totalPrice}
           /> 
         }
+        /* const disabledInfo = {
+            ...this.state.ingredients
+        }
+        for( let key in disabledInfo){
+            disabledInfo[key] = disabledInfo[key] <=0; //turns to true or false
+        }; */
         
+        /* if(this.state.loading){
+            orderSummary = <Spinner/>
+        } */
         return(
             <Aux>
              <Modal 

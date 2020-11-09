@@ -13,7 +13,7 @@ export const removeIngredient = (name) => {
         type: actionTypes.REMOVE_ING,
         ingName: name,
     }
-} ;
+};
 
 export const setIngredients = (ingredients) => {
     return {
@@ -33,6 +33,12 @@ export const initIngredients = () => {
         type: actionTypes.INIT_ING
     };
 };
+
+export const clearIngredients = () => {
+    return {
+        type: actionTypes.CLEAR_ING
+    };
+}
 
 /* export const initIngredients = () => {
     //available bcz of redux-thunk

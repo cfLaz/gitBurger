@@ -4,6 +4,7 @@ export {
     initIngredients,
     setIngredients,
     fetchIngFailed,
+    clearIngredients,
     
 } from './burgerBuilderA';
 
