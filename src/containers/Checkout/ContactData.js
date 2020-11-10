@@ -106,7 +106,7 @@ class ContactData extends Component {
         };
 
         let d = new Date();
-        let date = d.getDate()+ ' ' + d.getMonth()+ ' ' +d.getFullYear();
+        let date = d.getDate()+ '/' + d.getMonth()+ '/' +d.getFullYear();
         const order = {
             ingredients: this.props.ings,
             price: this.props.price, //this would ussualy be set up on the server, otherwise, users could manipulate it.
