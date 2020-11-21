@@ -26,10 +26,10 @@ export const purchaseBurger = (orderData, token) => {
     return dispatch =>{
 
         dispatch(purchaseBstart()); //dispatched to the store
-        
+       
         axios.post('/orders.json?auth='+token, orderData)
         .then(response => {
-            console.log(response.data);
+            console.log(response.data);  //this is the string that  identifies each order (response.data.name)
             dispatch(purchaseBsuccess(response.data.name, orderData));
         }).catch( error=> {
                 console.log(error);
@@ -63,18 +63,22 @@ export const fetchOrdersStart = () => {
         type: actionTypes.FETCH_ORDER_START,
     }
 }
-export const removeOrder =(id) => { //I added
+export const removeOrder =(id, token) => { //I added
     return { 
         type: actionTypes.REMOVE_ORDER,
-        orderId: id,
+        orderId: id, //getting the userID and not orderID...changed it, it's good now
+        token: token,
     }
 }
+//here is order id that I'm looking for
 export const fetchOrders = (token, userId) => {
     //in action (return) we could add getState as second argument next to dispatch but it's not usually recommended 
     return dispatch => {
         dispatch (fetchOrdersStart);
                                                 //understood by firebase (341, 4:20)
+                                                
         const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="'+ userId+'"';
+        
                             //this is the authentication
         axios.get('/orders.json'+ queryParams).then(
             response => {
@@ -83,9 +87,11 @@ export const fetchOrders = (token, userId) => {
                  for (let key in response.data){ //IDs are 'key's here, to not lose the ID we are pushing a new object in which we are adding the ID
                      fetchedOrders.push({
                          ...response.data[key], //entire order information
-                         id:key,
+                         id:key, // 'key' represents one order by it's orderID (e.g.ML39TeH-82RFhR-dr8N  - from firebase, think this is added by default when we initially push the order to firebase
+                         
                      });
                  }
+                 
                  dispatch(fetchOrdersSuccess(fetchedOrders));
                  
                 // console.log(fetchedOrders); //4me

@@ -20,7 +20,7 @@ class Orders extends Component {
         }
     } */
     removeOrder = (id) => {
-        return this.props.onRemoveOrder(id);
+        return this.props.onRemoveOrder(id, this.props.token);
     }
     render() {
 /* my shot - stupid syntax error occurs which doesn't make sense
@@ -56,12 +56,13 @@ const mapStateToProps = state => {
         loading: state.order.loading,
         token: state.auth.token,
         userId: state.auth.userId,
+        //orderID: state.orders[]
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
         onFetchOrders: (token, userId ) => dispatch(actions.fetchOrders(token, userId)),
-        onRemoveOrder: (id) => dispatch(actions.removeOrder(id))
+        onRemoveOrder: (id, token) => dispatch(actions.removeOrder(id, token))
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(Orders, axios));

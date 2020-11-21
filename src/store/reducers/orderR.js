@@ -1,10 +1,10 @@
 /* eslint-disable default-case */
 import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../../shared/utility';
-//import axios from '../../Axios-orders';
+import axios from '../../Axios-orders';
 
 const initialState = {
-orders: [],
+orders: [], //order IO is inside of orders[number] (orders[number].id)
 loading: false,
 purchased: false,
 //date: null,
@@ -27,21 +27,26 @@ const purchaseBsuccess = (state, action) => {
     ) )
 } */
 const removeOrder = (state,action) => {
+    console.log(state.orders)
     let k=null;
     for(let i =0; i<state.orders.length; i++){
         if(state.orders[i].id===action.orderId) k=i;
     }
-    //console.log(k); gives me correct index
+    console.log(state.orders[k]); //it does give me the correct index
     let updatedOrders = state.orders.slice();
     updatedOrders.splice(k,1);
     //works but doesn't remove from firebase [edit: added axios =>xhr.js:178 OPTIONS https://burger-builder-f9f4f.firebaseio.com/orders/-M8Xr-riuYV5-2-W5EzT 405 (Method Not Allowed)]
-    /* axios.delete('/orders/'+action.orderId).then(response =>{
+    
+    console.log('order id:' + state.orders[k].id);
+    /* const queryParams = '?auth=' + action.token + '&orderBy="orders"&equalTo="'+ state.orders[k].id+'"'; //think it will work like this */
+
+    axios.delete('/orders/'+action.orderId+'.json?auth='+action.token).then(response =>{
         console.log(response);
     }).catch(
         err=> {
             console.log(err);
         }
-    ); */
+    );
     return updateObject(state, {orders: updatedOrders});
 }
 

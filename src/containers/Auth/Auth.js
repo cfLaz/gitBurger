@@ -107,6 +107,8 @@ class Auth extends Component{
         if (this.props.isAuthenticated) {
             authRedirect = <Redirect to={this.props.authRedirectPath}/>
         }
+
+        //let SignUpBtn = <span className={classes.SignUp}>{'Sign up'}</span>;
         return (
             <div className={classes.Auth}>
                 {authRedirect}
@@ -115,7 +117,7 @@ class Auth extends Component{
 
                   {form}
                   <Button btnType='Success'> 
-                   {this.state.isSignUp ? 'Sign up' : 'Log in'}
+                   {this.state.isSignUp ? 'Sign up': 'Log in'}
                   </Button>
                 </form>
 

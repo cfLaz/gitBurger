@@ -26,3 +26,12 @@
     color: #ccc;
     cursor: not-allowed;
 }
+
+.AuthSuccess {
+    width: 20%;
+    height: 20%;
+    border-radius: 20%;
+    /* background-color: #703b09; */
+    opacity: 0.5;
+}
+

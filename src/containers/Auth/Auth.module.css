@@ -14,3 +14,9 @@
         width: 500px;
     }
 }
+
+.SignUp {
+    margin-left: 2%;
+    color:red;
+    opacity: 1;/*doesn't work because outer element is transparent, need to move the element outside of Button and position it so it seems like it's a child element*/
+}
