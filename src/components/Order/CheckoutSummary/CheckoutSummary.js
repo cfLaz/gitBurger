@@ -6,7 +6,7 @@ import {withRouter} from 'react-router-dom';
 const checkoutSummary= (props) => {
     return(
         <div className={classes.CheckoutSummary}>
-            <h2>Hope you lick your fingers!</h2>
+            <h2>This is your burger!</h2>
 
             <div style={{width: '100%', margin: 'auto'}}>
                 <Burger

@@ -116,8 +116,8 @@ class ContactData extends Component {
         };
         this.props.onOrderBurger(order, this.props.token);
 
-        //this.props.onClearIngredients(); //doesn't work like I want..works now 
-        alert('Бургер се спрема');
+        this.props.onClearIngredients(); //doesn't work like I want..works now 
+        alert('Your burger is being prepared');
     } 
 
     

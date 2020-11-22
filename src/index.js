@@ -16,7 +16,7 @@ import createSagaMiddleware from 'redux-saga';
 import {watchAuth, watchBB} from './store/sagas/indexS';
 
 
-const composeEnhancers = process.env.REACT_APP_NODE_ENVX === "development" ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose; //348
+const composeEnhancers = (process.env.REACT_APP_NODE_ENVX === "development" ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : '') || compose; //348
 
 const rootReducer = combineReducers({
     burgerBuilder: bbreducer,
@@ -34,7 +34,7 @@ sagaMiddleware.run(watchAuth);
 sagaMiddleware.run(watchBB);
 
 const app=(
-    /* provider wraps BR, The <Provider /> makes the Redux store available to any nested components that have been wrapped in the connect() function.*/
+    /* provider wraps BR, The <Provider /> makes the Redux store available to any nested components that have been wrapped in the connect() function*/
     <Provider store={store}>  
     <BrowserRouter>
         <App/>

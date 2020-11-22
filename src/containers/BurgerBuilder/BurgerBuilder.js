@@ -21,12 +21,12 @@ export class BurgerBuilder extends Component {
     componentDidMount () {
         console.log(this.props.ings);
 
-        /* if(!this.props.ings){ //I added this so when we come back to main page, previosly put ingredients will stay
+         if(!this.props.ings){ //I added this so when we come back to main page, previosly put ingredients will stay
             console.log('entering if condition where onInitIng is triggered')
-            //temporary, not good
-            //setTimeout(()=> {this.props.onInitIng()}, 1000) */
+            //temporary solution,not ideal
+            //setTimeout(()=> {this.props.onInitIng()}, 1000)
             this.props.onInitIng()
-        //}
+        }
     }
     updatePurchaseState (ingredients) {
 

@@ -18,23 +18,23 @@ class OrderS extends Component { //could convert this to functional component as
             
         return (
             <Aux>
-                <h3>Ваша поруџбина</h3>
-                <p>Састојци бургера:</p>
+                <h3>Your order:</h3>
+                <p>Burger ingredients:</p>
                 <ul>
                     {ingSummary}
                 </ul>
-                <p><strong>цијена: {this.props.price.toFixed(2)}</strong></p>
-                <p>Да наплатимо?</p>
+                <p><strong>price: {this.props.price.toFixed(2)}</strong></p>
+                <p>Continue?</p>
 
                 <Button btnType='Danger' clicked={this.props.purchaseCanceled}>
-                    Не :(
+                    No :(
                 </Button>
                 
                 <Button btnType='Success' 
                 clicked={this.props.purchaseContinued}
                 
                 >
-                    Да :)
+                    Yes :)
                 </Button>
                     
             </Aux>
