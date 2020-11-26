@@ -79,6 +79,7 @@ export class BurgerBuilder extends Component {
             <Aux>
                 <Burger 
                     ingredients={this.props.ings}
+                    order={this.props.order}
                 />
 
                 <div>
@@ -122,6 +123,7 @@ const mapStateToProps = state => {
         totalPrice: state.burgerBuilder.totalPrice,
         error: state.burgerBuilder.error,
         isAthenticated: state.auth.token != null,
+        order: state.burgerBuilder.order,
 
     };
 }

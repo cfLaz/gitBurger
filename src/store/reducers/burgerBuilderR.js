@@ -1,13 +1,15 @@
 /* eslint-disable default-case */
 import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../../shared/utility';
+import order from '../../components/Order/Order';
 
 const initialState = {
 
-    ingredients:null,
+    ingredients:null, //becomes object
     totalPrice: 4,
     error: false,
     building: false, // used when redirecting from Auth page which we accessed from Sign in to order button
+    order:[], //added this to try and set the order of ingredients by user clicks
 };
 const  PRICES = {
     salad: 0.5,
@@ -17,14 +19,16 @@ const  PRICES = {
 };
 
 const addIngredient = (state,action) => {
-
-    const updatedIng = {[action.ingName]: state.ingredients[action.ingName] +1}                             //has to be an object
+                    
+    const updatedIng = {[action.ingName]: state.ingredients[action.ingName] +1}    //has to be an object
+    // console.log(updatedIng) - gives me e.g. {meat: 1}     
     const updatedIngs = updateObject(state.ingredients, updatedIng)
     const updatedState = {
         ingredients: updatedIngs,
         totalPrice: state.totalPrice + PRICES[action.ingName],
         building: true,
     }
+    state.order.push(action.ingName)
     return updateObject(state, updatedState)
 }
 const removeIngredient = (state,action) =>{
@@ -34,6 +38,17 @@ const removeIngredient = (state,action) =>{
                 ingredients: updatedIngs2,
                 totalPrice: state.totalPrice - PRICES[action.ingName],
             }
+
+            let reversedOrder = [...state.order].reverse();
+            let i=0;
+            while(i < reversedOrder.length){
+                if(reversedOrder[i]===action.ingName){
+                    reversedOrder.splice(i,1);
+                    i+=reversedOrder.length;
+                }
+                i++;
+            }
+            state.order = reversedOrder.reverse();
             return updateObject(state, updatedState2)
 }
 
@@ -49,7 +64,8 @@ const setIngredients = (state,action) => {
         totalPrice: 4,
         building: false,
       }
-    
+      console.log('updatedSetIngs:')
+    console.log(updatedSetIngs)
     return updateObject(state,updatedSetIngs); 
 }
 const defaultInitialState = (state) => {

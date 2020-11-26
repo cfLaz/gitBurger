@@ -5,7 +5,7 @@ import {withRouter} from 'react-router-dom'; //we can use this if we don't want 
 const burger = (props) => {
     //console.log(props);
 
-    //Object.keys() gives an array of the keys, not values, so it would be ['salad',...]
+    //Object.keys() gives an array of the keys as strings, not values, so it would be ['salad',...]
     let transIng = Object.keys(props.ingredients).map(inKey =>{
         //console.log(inKey);
         return [...Array(props.ingredients[inKey])].map((_,i)=>{
@@ -18,16 +18,22 @@ const burger = (props) => {
         });
     }).reduce((arr, el) =>{
         return arr.concat(el);
-        }, []
-    ) 
+        }, [])
+
     console.log(transIng);
+
+    let testOrderList = props.order.map(ing => {
+        return <BI type={ing}/>          
+    })
+
     if (transIng.length === 0) {
         transIng = <p>Please start adding ingredients!</p>
     }
+
     return (
         <div className={classes.Burger}>
             <BI type='bread-top'/>
-            {transIng}
+            {testOrderList}
             <BI type='bread-bottom'/>
             
         </div>
