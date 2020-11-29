@@ -11,6 +11,7 @@ const checkoutSummary= (props) => {
             <div style={{width: '100%', margin: 'auto'}}>
                 <Burger
                   ingredients = {props.ingredients}
+                  ingsOrder = {props.ingsOrder}
                 />
             </div>
 

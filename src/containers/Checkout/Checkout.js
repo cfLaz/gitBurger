@@ -50,6 +50,7 @@ checkoutContinuedHandler = () => {
                 ingredients={this.props.ings} 
                 checkoutContinued={this.checkoutContinuedHandler}
                 checkoutCancelled={this.checkoutCancelledHandler}
+                ingsOrder = {this.props.ingredientsOrder}
                 />
                 <Route 
                 path={this.props.match.path + '/contact-data'} 
@@ -71,6 +72,7 @@ const mapStateToProps = state=> {
     return {
         ings: state.burgerBuilder.ingredients,
         purchased: state.order.purchased,
+        ingredientsOrder: state.burgerBuilder.ingredientsOrder
     }
 }
 /* const mapDispatchToProps = dispatch => {

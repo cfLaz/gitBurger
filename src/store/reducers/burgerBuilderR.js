@@ -1,7 +1,7 @@
 /* eslint-disable default-case */
 import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../../shared/utility';
-import order from '../../components/Order/Order';
+//import order from '../../components/Order/Order';
 
 const initialState = {
 
@@ -9,7 +9,7 @@ const initialState = {
     totalPrice: 4,
     error: false,
     building: false, // used when redirecting from Auth page which we accessed from Sign in to order button
-    order:[], //added this to try and set the order of ingredients by user clicks
+    ingredientsOrder:[null], //added this to try and set the order of ingredients by user clicks
 };
 const  PRICES = {
     salad: 0.5,
@@ -23,23 +23,25 @@ const addIngredient = (state,action) => {
     const updatedIng = {[action.ingName]: state.ingredients[action.ingName] +1}    //has to be an object
     // console.log(updatedIng) - gives me e.g. {meat: 1}     
     const updatedIngs = updateObject(state.ingredients, updatedIng)
+    
+    let testOrder = [...state.ingredientsOrder];
+    testOrder.push(action.ingName);
+    
     const updatedState = {
         ingredients: updatedIngs,
         totalPrice: state.totalPrice + PRICES[action.ingName],
         building: true,
+        ingredientsOrder: testOrder,
     }
-    state.order.push(action.ingName)
+    
     return updateObject(state, updatedState)
 }
 const removeIngredient = (state,action) =>{
-    const updatedIng2 = {[action.ingName]: state.ingredients[action.ingName] -1}                             //has to be an object
-            const updatedIngs2 = updateObject(state.ingredients, updatedIng2)
-            const updatedState2 = {
-                ingredients: updatedIngs2,
-                totalPrice: state.totalPrice - PRICES[action.ingName],
-            }
+    const updatedIng2 = {[action.ingName]: state.ingredients[action.ingName] -1}
+                                 //has to be an object
+    const updatedIngs2 = updateObject(state.ingredients, updatedIng2)
 
-            let reversedOrder = [...state.order].reverse();
+    let reversedOrder = [...state.ingredientsOrder].reverse();
             let i=0;
             while(i < reversedOrder.length){
                 if(reversedOrder[i]===action.ingName){
@@ -48,8 +50,13 @@ const removeIngredient = (state,action) =>{
                 }
                 i++;
             }
-            state.order = reversedOrder.reverse();
-            return updateObject(state, updatedState2)
+
+    const updatedState2 = {
+        ingredients: updatedIngs2,
+        totalPrice: state.totalPrice - PRICES[action.ingName],
+        ingredientsOrder: reversedOrder.reverse(),
+    }
+    return updateObject(state, updatedState2)
 }
 
 const setIngredients = (state,action) => {
@@ -63,9 +70,9 @@ const setIngredients = (state,action) => {
         error:false,
         totalPrice: 4,
         building: false,
+        ingredientsOrder: [],
       }
-      console.log('updatedSetIngs:')
-    console.log(updatedSetIngs)
+      
     return updateObject(state,updatedSetIngs); 
 }
 const defaultInitialState = (state) => {
