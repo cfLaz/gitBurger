@@ -45,7 +45,7 @@ class Auth extends Component{
     }
     componentDidMount() { //if burger is empty and auth redirect is not '/'
         if(!this.props.buildingBurger && this.props.authRedirect !== '/'){
-            this.props.onSetAuthRedirectPath(); //shoot me to te burger builder to add some ingredients.
+            this.props.onSetAuthRedirectPath(); //shoot me to the burger builder to add some ingredients.
         }
     }
     
